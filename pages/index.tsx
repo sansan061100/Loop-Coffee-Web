@@ -1,8 +1,14 @@
 import MainLayout from "@/components/Layout/MainLayout";
 import React, { ReactElement } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
-const Home = () => {
+const Login = () => {
+  const router = useRouter();
+  const handleLogin = () => {
+    router.replace("/app/home");
+  };
+
   return (
     <div>
       <div className="w-full relative h-80">
@@ -21,15 +27,17 @@ const Home = () => {
           tujuan
         </p>
       </div>
-      <div className="fixed right-5 left-5 bottom-5">
-        <button className="btn btn-primary w-full">Login Dengan Google</button>
+      <div className="absolute right-5 left-5 bottom-5">
+        <button onClick={handleLogin} className="btn btn-primary w-full">
+          Login Dengan Google
+        </button>
       </div>
     </div>
   );
 };
 
-Home.getLayout = (page: ReactElement) => {
+Login.getLayout = (page: ReactElement) => {
   return <MainLayout>{page}</MainLayout>;
 };
 
-export default Home;
+export default Login;

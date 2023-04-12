@@ -1,7 +1,13 @@
+import Seller from "@/components/Home/Seller";
 import React from "react";
 
-const home = () => {
-  return <div>home</div>;
+const Home = () => {
+  return (
+    <div className="px-5 space-y-5">
+      <Seller />
+      <Seller />
+    </div>
+  );
 };
 
-export default home;
+export default Home;
