@@ -7,5 +7,5 @@ body {
 }
 
 .card.image-full:before {
-  z-index: 0;
+  @apply z-0 rounded-none;
 }
