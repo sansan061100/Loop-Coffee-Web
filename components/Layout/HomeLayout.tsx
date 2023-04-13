@@ -7,10 +7,10 @@ const HomeLayout: React.FC<PropsWithChildren<HeaderProps>> = ({
   title,
 }) => {
   return (
-    <div className="flex justify-center items-center">
-      <div className="artboard  relative lg:w-2/5 min-h-screen bg-white">
+    <div className="flex justify-center  h-screen ">
+      <div className="artboard  relative lg:w-2/5  bg-white">
         <Header title={title} />
-        {children}
+        <div className="overflow-y-auto h-full">{children}</div>
         <div className="z-50">
           <BottomNavigation />
         </div>
