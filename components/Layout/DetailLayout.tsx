@@ -1,21 +1,20 @@
 import React, { PropsWithChildren } from "react";
 import Header, { HeaderProps } from "./_Partials/Header";
 import BottomNavigation from "./_Partials/BottomNavigation";
+import HeaderDetail, { HeaderDetailProps } from "./_Partials/HeaderDetail";
 import MainLayout from "./MainLayout";
 
-const HomeLayout: React.FC<PropsWithChildren<HeaderProps>> = ({
+const DetailLayout: React.FC<PropsWithChildren<HeaderDetailProps>> = ({
   children,
   title,
+  navEnd,
 }) => {
   return (
     <MainLayout>
-      <Header title={title} />
+      <HeaderDetail title={title} navEnd={navEnd} />
       <div className="overflow-y-auto h-full">{children}</div>
-      <div className="z-50">
-        <BottomNavigation />
-      </div>
     </MainLayout>
   );
 };
 
-export default HomeLayout;
+export default DetailLayout;

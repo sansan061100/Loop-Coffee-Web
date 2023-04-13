@@ -1,10 +1,15 @@
 import Image from "next/image";
 import React from "react";
 import { MapPinIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
 
 const Seller = () => {
+  const router = useRouter();
   return (
-    <div className="border-b">
+    <div
+      className="border-b hover:bg-gray-200 cursor-pointer"
+      onClick={() => router.push("/app/seller")}
+    >
       <div className="card bg-base-100 h-32 rounded-none image-full">
         <figure>
           <Image

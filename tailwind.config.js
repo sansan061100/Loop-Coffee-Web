@@ -10,5 +10,16 @@ module.exports = {
 
     },
   },
+  daisyui: {
+    themes: [
+      {
+        light: {
+          ...require("daisyui/src/colors/themes")["[data-theme=light]"],
+          primary: "#A9907E",
+          "primary-focus": "#916F5C",
+        },
+      },
+    ],
+  },
   plugins: [require("daisyui"), require('@tailwindcss/line-clamp'),],
 }
