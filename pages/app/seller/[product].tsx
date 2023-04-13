@@ -23,7 +23,7 @@ const DetailProduct = () => {
         </div>
         <p className="text-gray-500">Espressso + hot water</p>
       </div>
-      <div className="flex justify-center items-center">
+      <div className="flex py-5 justify-center items-center">
         <Stepper />
       </div>
       <div className="absolute bottom-5 right-5 left-5">
