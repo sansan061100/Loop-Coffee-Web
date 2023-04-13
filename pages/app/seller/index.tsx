@@ -1,3 +1,4 @@
+import CartMenu from "@/components/Cart/CartMenu";
 import DetailLayout from "@/components/Layout/DetailLayout";
 import ListProduct from "@/components/Seller/ListProduct";
 import Image from "next/image";
@@ -28,13 +29,20 @@ const Seller = () => {
           </p>
         </div>
       </div>
-      <ListProduct />
+      <div className="pb-40">
+        <ListProduct />
+        <ListProduct />
+      </div>
     </div>
   );
 };
 
 Seller.getLayout = (page: ReactElement) => {
-  return <DetailLayout title="Produk">{page}</DetailLayout>;
+  return (
+    <DetailLayout title="Produk" navEnd={<CartMenu />}>
+      {page}
+    </DetailLayout>
+  );
 };
 
 export default Seller;

@@ -2,7 +2,7 @@ import DetailLayout from "@/components/Layout/DetailLayout";
 import Image from "next/image";
 import React, { ReactElement } from "react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
-import Stepper from "@/components/Seller/Stepper";
+import Stepper from "@/components/Cart/Stepper";
 
 const DetailProduct = () => {
   return (

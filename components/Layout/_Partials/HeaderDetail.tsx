@@ -3,7 +3,10 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { HeaderProps } from "./Header";
 import { useRouter } from "next/router";
 
-const HeaderDetail: React.FC<HeaderProps> = ({ title }) => {
+export interface HeaderDetailProps extends HeaderProps {
+  navEnd?: React.ReactNode;
+}
+const HeaderDetail: React.FC<HeaderDetailProps> = ({ title, navEnd }) => {
   const router = useRouter();
   return (
     <div className="navbar sticky top-0 z-50 bg-base-100">
@@ -20,7 +23,7 @@ const HeaderDetail: React.FC<HeaderProps> = ({ title }) => {
       <div className="navbar-center">
         <a className="btn btn-ghost normal-case text-xl">{title}</a>
       </div>
-      <div className="navbar-end"></div>
+      <div className="navbar-end">{navEnd}</div>
     </div>
   );
 };

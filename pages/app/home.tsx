@@ -8,7 +8,6 @@ const Home = () => {
     <div>
       <Seller />
       <Seller />
-
       <div className="h-5 w-full pb-48" />
     </div>
   );
