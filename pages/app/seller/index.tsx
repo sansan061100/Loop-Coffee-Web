@@ -31,7 +31,6 @@ const Seller = () => {
       </div>
       <div className="pb-40">
         <ListProduct />
-        <ListProduct />
       </div>
     </div>
   );

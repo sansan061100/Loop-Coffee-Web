@@ -7,7 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
-
+      screens: {
+        pwa: { raw: '(display-mode: standalone)' },
+        browser: { raw: '(display-mode: browser)' },
+      },
     },
   },
   daisyui: {

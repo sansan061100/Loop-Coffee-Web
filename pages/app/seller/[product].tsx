@@ -26,7 +26,7 @@ const DetailProduct = () => {
       <div className="flex py-5 justify-center items-center">
         <Stepper />
       </div>
-      <div className="absolute bottom-5 right-5 left-5">
+      <div className="footer-container">
         <button className="btn btn-primary w-full">
           <ShoppingCartIcon className="h-5 w-5 mr-5" />
           Tambah Keranjang
