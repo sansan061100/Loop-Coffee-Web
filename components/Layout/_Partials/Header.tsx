@@ -1,5 +1,6 @@
 import React from "react";
 import { BellIcon, Bars3Icon } from "@heroicons/react/24/outline";
+import CartMenu from "@/components/Cart/CartMenu";
 
 export interface HeaderProps {
   title?: string;
@@ -18,9 +19,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
         <a className="btn btn-ghost normal-case text-xl">{title}</a>
       </div>
       <div className="navbar-end">
-        <button className="btn btn-ghost btn-circle">
-          <BellIcon className="h-6 w-6" />
-        </button>
+        <CartMenu />
       </div>
     </div>
   );
