@@ -4,7 +4,7 @@ import Header from "./_Partials/Header";
 const MainLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className="flex justify-center items-center">
-      <div className="artboard  relative lg:w-2/5 min-h-screen bg-white">
+      <div className="artboard  relative lg:w-4/12  bg-white h-screen">
         {children}
       </div>
     </div>

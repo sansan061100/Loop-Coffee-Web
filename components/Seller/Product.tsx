@@ -1,9 +1,14 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React from "react";
 
 const Product = () => {
+  const router = useRouter();
   return (
-    <div className="py-4 border-t last:border-b px-5 flex justify-between items-center">
+    <div
+      className="py-4 border-t last:border-b cursor-pointer px-5 flex hover:bg-gray-100 justify-between items-center"
+      onClick={() => router.push("/app/seller/1")}
+    >
       <div className="space-y-2">
         <h4 className="font-bold">Hot Americano</h4>
         <p className="text-sm text-gray-500">Espressso + hot water</p>

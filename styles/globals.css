@@ -9,3 +9,9 @@ body {
 .card.image-full:before {
   @apply z-0 rounded-none;
 }
+
+@layer components {
+  .main-wrapper {
+    @apply artboard  relative lg:w-2  bg-white;
+  }
+}
