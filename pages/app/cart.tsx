@@ -1,13 +1,11 @@
 import ListCart from "@/components/Cart/ListCart";
 import DetailLayout from "@/components/Layout/DetailLayout";
-import HomeLayout from "@/components/Layout/HomeLayout";
-import Image from "next/image";
 import React, { ReactElement } from "react";
 
 const Cart = () => {
   return (
     <div>
-      <div className="border-b border-t">
+      <div className="border-b ">
         <div className="p-5">
           <div className="flex  items-center justify-between">
             <h3 className="font-bold text-lg">Filament Coffee</h3>
@@ -20,7 +18,7 @@ const Cart = () => {
         </div>
       </div>
       <ListCart />
-      <div className="absolute flex dri justify-between items-center bottom-0 p-5 border-t right-0 left-0">
+      <div className="flex  justify-between items-center footer-container bottom-0 p-5 border-t right-0 left-0">
         <div>
           <label>Total Harga</label>
           <h4 className="font-bold text-lg">-</h4>

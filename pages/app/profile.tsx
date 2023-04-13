@@ -11,7 +11,7 @@ import React, { ReactElement } from "react";
 const profile = () => {
   return (
     <div>
-      <div className="p-5 border-t border-b flex space-x-5 items-center">
+      <div className="p-5 border-b flex space-x-5 items-center">
         <div className="avatar">
           <div className="w-16 mask mask-squircle">
             <Image

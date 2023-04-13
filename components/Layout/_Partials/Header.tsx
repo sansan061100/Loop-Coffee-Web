@@ -7,9 +7,9 @@ export interface HeaderProps {
 }
 const Header: React.FC<HeaderProps> = ({ title }) => {
   return (
-    <div className="navbar sticky top-0 z-50 bg-base-100">
+    <div className="navbar sticky border-b top-0 z-50 bg-base-100">
       <div className="navbar-start">
-        <button className="btn btn-ghost btn-circle">
+        <button className="btn  btn-ghost btn-circle">
           <Bars3BottomLeftIcon className="h-6 w-6" />
         </button>
       </div>

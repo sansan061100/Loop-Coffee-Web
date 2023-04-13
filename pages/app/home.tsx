@@ -1,6 +1,5 @@
 import Seller from "@/components/Home/Seller";
 import HomeLayout from "@/components/Layout/HomeLayout";
-import MainLayout from "@/components/Layout/MainLayout";
 import React, { ReactElement } from "react";
 
 const Home = () => {

@@ -9,7 +9,7 @@ export interface HeaderDetailProps extends HeaderProps {
 const HeaderDetail: React.FC<HeaderDetailProps> = ({ title, navEnd }) => {
   const router = useRouter();
   return (
-    <div className="navbar sticky top-0 z-50 bg-base-100">
+    <div className="navbar sticky border-b top-0 z-50 bg-base-100">
       <div className="navbar-start">
         <div className="navbar-end">
           <button

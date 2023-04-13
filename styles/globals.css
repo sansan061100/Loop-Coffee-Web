@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply h-screen bg-gray-100 overflow-y-hidden;
+  @apply h-screen bg-gray-100 pwa:overflow-y-hidden browser:lg:overflow-hidden;
 }
 
 .card.image-full:before {
@@ -13,5 +13,9 @@ body {
 @layer components {
   .main-wrapper {
     @apply artboard  relative lg:w-2  bg-white;
+  }
+
+  .footer-container {
+    @apply browser:lg:absolute pwa:fixed fixed bottom-5 right-5 left-5;
   }
 }
