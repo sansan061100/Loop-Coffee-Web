@@ -9,15 +9,15 @@ import Link from "next/link";
 const BottomNavigation = () => {
   return (
     <div className="btm-nav absolute opacity-1 border-t bg-white drop-shadow-xl">
-      <Link href={"/app/home"} className="active">
+      <Link href={"/app/home"} className="active focus:bg-gray-200">
         <MagnifyingGlassIcon className="h-5 w-5" strokeWidth={2} />
         <span className="btm-nav-label text-sm">Explore</span>
       </Link>
-      <button>
+      <button className="focus:bg-gray-200">
         <ShoppingBagIcon className="h-5 w-5" strokeWidth={2} />
         <span className="btm-nav-label text-sm">Keranjang</span>
       </button>
-      <button>
+      <button className="focus:bg-gray-200">
         <UserIcon className="h-5 w-5" strokeWidth={2} />
         <span className="btm-nav-label text-sm">Profile</span>
       </button>
