@@ -1,8 +1,10 @@
 import ListCart from "@/components/Cart/ListCart";
 import DetailLayout from "@/components/Layout/DetailLayout";
+import { useRouter } from "next/router";
 import React, { ReactElement } from "react";
 
 const Cart = () => {
+  const router = useRouter();
   return (
     <div>
       <div className="border-b ">
@@ -18,12 +20,17 @@ const Cart = () => {
         </div>
       </div>
       <ListCart />
-      <div className="flex  justify-between items-center footer-container bottom-0 p-5 border-t right-0 left-0">
+      <div className="flex bg-white drop-shadow-md  justify-between items-center footer-container bottom-0 p-5 border-t right-0 left-0">
         <div>
           <label>Total Harga</label>
           <h4 className="font-bold text-lg">-</h4>
         </div>
-        <button className="btn btn-primary">Checkout (1)</button>
+        <button
+          className="btn btn-primary"
+          onClick={() => router.push("/app/checkout")}
+        >
+          Checkout (1)
+        </button>
       </div>
     </div>
   );

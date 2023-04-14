@@ -10,20 +10,18 @@ const HeaderDetail: React.FC<HeaderDetailProps> = ({ title, navEnd }) => {
   const router = useRouter();
   return (
     <div className="navbar flex justify-between items-center sticky border-b top-0 z-50 bg-base-100">
-      <div>
-        <div className="navbar-end">
-          <button
-            className="btn btn-ghost btn-circle"
-            onClick={() => router.back()}
-          >
-            <ArrowLeftIcon className="h-6 w-6" />
-          </button>
-        </div>
+      <div className="navbar-start">
+        <button
+          className="btn btn-ghost btn-circle"
+          onClick={() => router.back()}
+        >
+          <ArrowLeftIcon className="h-6 w-6" />
+        </button>
       </div>
-      <div>
+      <div className="navbar-center">
         <a className="btn btn-ghost normal-case text-xl">{title}</a>
       </div>
-      <div>{navEnd}</div>
+      <div className="navbar-end">{navEnd}</div>
     </div>
   );
 };
