@@ -18,4 +18,8 @@ body {
   .footer-container {
     @apply browser:lg:absolute pwa:fixed fixed bottom-5 right-5 left-5;
   }
+
+  .drawer-toggle ~ .drawer-content {
+    @apply overflow-y-hidden;
+  }
 }

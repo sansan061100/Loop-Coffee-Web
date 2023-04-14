@@ -9,8 +9,8 @@ export interface HeaderDetailProps extends HeaderProps {
 const HeaderDetail: React.FC<HeaderDetailProps> = ({ title, navEnd }) => {
   const router = useRouter();
   return (
-    <div className="navbar sticky border-b top-0 z-50 bg-base-100">
-      <div className="navbar-start">
+    <div className="navbar flex justify-between items-center sticky border-b top-0 z-50 bg-base-100">
+      <div>
         <div className="navbar-end">
           <button
             className="btn btn-ghost btn-circle"
@@ -20,10 +20,10 @@ const HeaderDetail: React.FC<HeaderDetailProps> = ({ title, navEnd }) => {
           </button>
         </div>
       </div>
-      <div className="navbar-center">
+      <div>
         <a className="btn btn-ghost normal-case text-xl">{title}</a>
       </div>
-      <div className="navbar-end">{navEnd}</div>
+      <div>{navEnd}</div>
     </div>
   );
 };

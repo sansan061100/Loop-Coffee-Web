@@ -36,10 +36,6 @@ const BottomNavigation = () => {
         <BellIcon className="h-5 w-5" strokeWidth={2} />
         <span className="btm-nav-label text-sm">Notifikasi</span>
       </Link>
-      <Link href={"/app/profile"} className={`${isActive("/app/profile")} `}>
-        <UserIcon className="h-5 w-5" strokeWidth={2} />
-        <span className="btm-nav-label text-sm">Profile</span>
-      </Link>
     </div>
   );
 };
