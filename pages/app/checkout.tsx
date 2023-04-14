@@ -1,8 +1,13 @@
+import ShippingMethod from "@/components/Checkout/ShippingMethod";
 import DetailLayout from "@/components/Layout/DetailLayout";
 import React, { ReactElement } from "react";
 
 const Checkout = () => {
-  return <div>Checkout</div>;
+  return (
+    <div className="w-full">
+      <ShippingMethod />
+    </div>
+  );
 };
 
 Checkout.getLayout = (page: ReactElement) => {
