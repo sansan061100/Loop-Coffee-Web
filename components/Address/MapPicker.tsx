@@ -34,7 +34,7 @@ const MapPicker = () => {
             position="bottom-right"
             trackUserLocation={true}
             onGeolocate={(res: GeolocateResultEvent) => {
-              alert("geolocate");
+              // alert("geolocate");
               setLocation({
                 latitude: res.coords.latitude,
                 longitude: res.coords.longitude,
@@ -42,7 +42,7 @@ const MapPicker = () => {
               console.log(res.coords.latitude);
             }}
             onTrackUserLocationStart={() => {
-              alert("track start");
+              // alert("track start");
             }}
             fitBoundsOptions={{
               maxZoom: 22,
