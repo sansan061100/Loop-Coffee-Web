@@ -22,4 +22,11 @@ body {
   .drawer-toggle ~ .drawer-content {
     @apply overflow-y-hidden;
   }
+  .tab {
+    @apply bg-gray-100 text-base text-gray-400 tracking-wide;
+  }
+
+  .tab-active {
+    @apply bg-white  font-bold text-base text-black;
+  }
 }

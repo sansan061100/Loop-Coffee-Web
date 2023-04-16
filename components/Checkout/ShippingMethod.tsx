@@ -1,65 +1,32 @@
-import { ShoppingBagIcon, TruckIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronRightIcon,
+  MapPinIcon,
+  ShoppingBagIcon,
+  TruckIcon,
+} from "@heroicons/react/24/outline";
+import Link from "next/link";
 import React from "react";
 
 const ShippingMethod = () => {
   return (
     <div>
-      <div className="border-b">
-        <div className="p-5 bg-gray-50">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-5">
-              <div className="btn animate-none btn-primary  btn-circle">
-                <ShoppingBagIcon className="h-6 w-6" />
-              </div>
-              <div>
-                <h4 className="font-bold">Pickup</h4>
-                <p className="text-sm text-gray-500">
-                  Ambil ke penjual tanpa antri
-                </p>
-              </div>
-            </div>
-            <label
-              htmlFor="modal-shipping"
-              className="btn btn-sm btn-outline btn-primary"
-            >
-              Ubah
-            </label>
-          </div>
-        </div>
+      <div className="tabs w-full">
+        <a className="tab flex-1 h-auto py-3 tab-active">Diantarkan Penjual</a>
+        <a className="tab flex-1 h-auto py-3  ">Ambil Sendiri</a>
       </div>
-      {/* modal  */}
-      <input type="checkbox" id="modal-shipping" className="modal-toggle" />
-      <label
-        htmlFor="modal-shipping"
-        className="modal modal-bottom sm:modal-middle"
-      >
-        <div className="modal-box">
-          <div className="space-y-8">
-            <div className="flex items-center space-x-5">
-              <div className="btn animate-none btn-primary  btn-circle">
-                <ShoppingBagIcon className="h-6 w-6" />
-              </div>
-              <div>
-                <h4 className="font-bold">Pickup</h4>
-                <p className="text-sm text-gray-500">
-                  Ambil ke penjual tanpa antri
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-5">
-              <div className="btn animate-none btn-secondary  btn-circle">
-                <TruckIcon className="h-6 w-6" />
-              </div>
-              <div>
-                <h4 className="font-bold">Delivery</h4>
-                <p className="text-sm text-gray-500">
-                  Segera diantar ke alamat kamu
-                </p>
-              </div>
+      <Link href={"/app/profile/address"}>
+        <div className="flex justify-between items-center p-5 border-b">
+          <div className="flex space-x-5 items-center">
+            <MapPinIcon className="h-6 w-6" />
+            <div>
+              <p className="text-sm">
+                Panyingkiran, Tasikmalaya, West Java, 46151, Indonesia
+              </p>
             </div>
           </div>
+          <ChevronRightIcon className="h-6 w-6 text-gray-500" />
         </div>
-      </label>
+      </Link>
     </div>
   );
 };
