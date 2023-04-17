@@ -3,6 +3,7 @@ import Header, { HeaderProps } from "./_Partials/Header";
 import BottomNavigation from "./_Partials/BottomNavigation";
 import MainLayout from "./MainLayout";
 import Sidebar from "../Sidebar";
+import Head from "next/head";
 
 const HomeLayout: React.FC<PropsWithChildren<HeaderProps>> = ({
   children,
@@ -10,6 +11,9 @@ const HomeLayout: React.FC<PropsWithChildren<HeaderProps>> = ({
 }) => {
   return (
     <MainLayout>
+      <Head>
+        <title>{`${title} - Loop Coffee`}</title>
+      </Head>
       <div className="drawer">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
