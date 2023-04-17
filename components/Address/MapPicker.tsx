@@ -1,57 +1,97 @@
-import { MAP_BOX_TOKEN } from "@/config/env";
-import React, { useCallback, useState } from "react";
-import Map, {
-  GeolocateControl,
-  GeolocateControlRef,
-  GeolocateResultEvent,
-} from "react-map-gl";
+import { MAP_KEY } from "@/config/env";
+import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
+import React, { useMemo, useState, useEffect } from "react";
+import MyLocationButton from "./MyLocationButton";
+import axios from "axios";
 
 const MapPicker = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [location, setLocation] = useState({
-    latitude: 0,
-    longitude: 0,
+    lat: 0,
+    lng: 0,
   });
-  const mapRef = useCallback((ref: GeolocateControlRef) => {
-    if (ref) {
-      ref.trigger();
-    }
+  const [address, setAddress] = useState("");
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: MAP_KEY,
+    region: "ID",
+    language: "id",
+  });
+
+  const getMyLocation = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setLocation({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    });
+  };
+
+  useEffect(() => {
+    getMyLocation();
   }, []);
 
+  useEffect(() => {
+    if (location.lat === 0 && location.lng === 0) return;
+    const URL = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${MAP_KEY}`;
+    const fetchAddress = async () => {
+      setIsLoading(true);
+      await axios.get(URL).then((res) => {
+        setAddress(res.data.results[0].formatted_address);
+      });
+      setIsLoading(false);
+    };
+    fetchAddress();
+  }, [location]);
+
+  const onChangeMarker = (e: google.maps.MapMouseEvent) => {
+    const { lat, lng }: any = e.latLng?.toJSON();
+    setLocation({
+      lat,
+      lng,
+    });
+  };
+
   return (
-    <div className="h-screen w-full flex flex-col">
-      <div className="flex-1 h-full relative">
-        <Map
-          initialViewState={{
-            longitude: location.longitude,
-            latitude: location.latitude,
-            zoom: 14,
-          }}
-          mapboxAccessToken={MAP_BOX_TOKEN}
-          attributionControl={false}
-          mapStyle="mapbox://styles/mapbox/streets-v9"
-        >
-          <GeolocateControl
-            position="bottom-right"
-            trackUserLocation={true}
-            onGeolocate={(res: GeolocateResultEvent) => {
-              // alert("geolocate");
-              setLocation({
-                latitude: res.coords.latitude,
-                longitude: res.coords.longitude,
-              });
-              console.log(res.coords.latitude);
+    <div className="flex h-screen flex-col">
+      {isLoaded ? (
+        <div className="flex-1 relative">
+          <GoogleMap
+            zoom={18}
+            clickableIcons={false}
+            center={location}
+            mapContainerClassName="h-full w-full"
+            options={{
+              fullscreenControl: false,
+              mapTypeControl: false,
+              zoomControl: false,
+              streetViewControl: false,
             }}
-            onTrackUserLocationStart={() => {
-              // alert("track start");
-            }}
-            fitBoundsOptions={{
-              maxZoom: 22,
-            }}
-          />
-        </Map>
+          >
+            <Marker position={location} draggable onDragEnd={onChangeMarker} />
+          </GoogleMap>
+          <MyLocationButton onClick={getMyLocation} />
+        </div>
+      ) : (
+        <div className="animate-pulse flex-1">
+          <div className="h-full w-full bg-gray-200" />
+        </div>
+      )}
+      <div className="flex-1 p-5">
+        <h1 className="font-bold text-lg">Pilih Alamat Pengantaran</h1>
+        <div className="mt-5">
+          {!isLoading ? (
+            <p>{address}</p>
+          ) : (
+            <div className="animate-pulse">
+              <div className="h-4 w-full bg-gray-200 rounded-sm"></div>
+              <div className="h-4 w-4/12 mt-2 rounded-sm bg-gray-200"></div>
+            </div>
+          )}
+        </div>
       </div>
-      <div className=" bg-white flex-1 shadow-md p-5">
-        <h4 className="font-bold text-lg">Pilih Alamat Pengantaran</h4>
+      <div className="footer-container">
+        <button className="btn btn-primary w-full">Konfirmasi Alamat</button>
       </div>
     </div>
   );

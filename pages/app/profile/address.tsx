@@ -1,7 +1,10 @@
 import DetailLayout from "@/components/Layout/DetailLayout";
 import dynamic from "next/dynamic";
 import React, { ReactElement } from "react";
-import MapPicker from "@/components/Address/MapPicker";
+
+const MapPicker = dynamic(() => import("@/components/Address/MapPicker"), {
+  ssr: false,
+});
 
 const Address = () => {
   return (
