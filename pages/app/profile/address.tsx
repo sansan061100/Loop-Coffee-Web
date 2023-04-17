@@ -1,5 +1,4 @@
 import DetailLayout from "@/components/Layout/DetailLayout";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { ReactElement, useLayoutEffect } from "react";
 import MapPicker from "@/components/Address/MapPicker";

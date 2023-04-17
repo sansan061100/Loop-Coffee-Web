@@ -1,4 +1,4 @@
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { MinusIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import React from "react";
 
@@ -21,7 +21,7 @@ const Cart = () => {
           <div className="font-semibold">Hot Americano</div>
           <div className="font-semibold">Rp 38.000</div>
         </div>
-        <div className="flex">
+        <div className="flex items-center justify-between">
           <div className="flex space-x-5 justify-between rounded-lg py-1  border">
             <button className="btn btn-xs btn-square btn-ghost">
               <MinusIcon className="h-5 w-5 text-primary" />
@@ -31,6 +31,9 @@ const Cart = () => {
               <PlusIcon className="h-5 w-5 text-primary" />
             </button>
           </div>
+          <button className="btn btn-sm btn-ghost btn-circle">
+            <TrashIcon className="h-5 w-5" />
+          </button>
         </div>
       </div>
     </div>

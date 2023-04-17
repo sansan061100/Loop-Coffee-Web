@@ -5,7 +5,6 @@ const ListCart = () => {
   return (
     <div>
       <div>
-        {" "}
         <Cart />
       </div>
       <div className="flex justify-center py-5 items-center">
