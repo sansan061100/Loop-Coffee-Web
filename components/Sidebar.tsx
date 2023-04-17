@@ -35,6 +35,7 @@ const Sidebar = () => {
         <ListNavigation
           title="Profile"
           icon={<UserIcon className="h-5 w-5" />}
+          href="/app/profile"
         />
         <ListNavigation
           title="Alamat Saya"
