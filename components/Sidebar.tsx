@@ -39,6 +39,7 @@ const Sidebar = () => {
         <ListNavigation
           title="Alamat Saya"
           icon={<MapPinIcon className="h-5 w-5" />}
+          href="/app/profile/address"
         />
         <ListNavigation
           title="Bantuan"
