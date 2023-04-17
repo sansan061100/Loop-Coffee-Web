@@ -2,6 +2,7 @@ import MainLayout from "@/components/Layout/MainLayout";
 import React, { ReactElement } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const Login = () => {
   const router = useRouter();
@@ -11,6 +12,9 @@ const Login = () => {
 
   return (
     <div>
+      <Head>
+        <title>Login - Loop Coffee</title>
+      </Head>
       <div className="w-full relative h-80">
         <Image
           src="/img/login.jpg"
