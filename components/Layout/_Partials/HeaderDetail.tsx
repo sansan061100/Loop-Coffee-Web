@@ -9,16 +9,14 @@ export interface HeaderDetailProps extends HeaderProps {
 const HeaderDetail: React.FC<HeaderDetailProps> = ({ title, navEnd }) => {
   const router = useRouter();
   return (
-    <div className="navbar sticky border-b top-0 z-50 bg-base-100">
+    <div className="navbar flex justify-between items-center sticky border-b top-0 z-50 bg-base-100">
       <div className="navbar-start">
-        <div className="navbar-end">
-          <button
-            className="btn btn-ghost btn-circle"
-            onClick={() => router.back()}
-          >
-            <ArrowLeftIcon className="h-6 w-6" />
-          </button>
-        </div>
+        <button
+          className="btn btn-ghost btn-circle"
+          onClick={() => router.back()}
+        >
+          <ArrowLeftIcon className="h-6 w-6" />
+        </button>
       </div>
       <div className="navbar-center">
         <a className="btn btn-ghost normal-case text-xl">{title}</a>

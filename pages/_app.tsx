@@ -1,4 +1,3 @@
-import MainLayout from "@/components/Layout/MainLayout";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import type { ReactElement, ReactNode } from "react";
