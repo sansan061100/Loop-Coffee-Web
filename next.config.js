@@ -22,6 +22,9 @@ const nextConfig = withPWA({
       },
     ],
   },
+  env: {
+    test: "okee"
+  }
 })
 
 module.exports = nextConfig
