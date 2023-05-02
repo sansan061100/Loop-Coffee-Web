@@ -7,8 +7,21 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import ListNavigation from "./ListNavigation";
+import { signOut, useSession } from "next-auth/react";
 
 const Sidebar = () => {
+  const test = useSession();
+  console.log(test);
+  const handleLogout = () => {
+    const confirm = window.confirm("Apakah anda yakin ingin keluar?");
+    if (confirm) {
+      signOut({
+        redirect: true,
+        callbackUrl: "/",
+      });
+    }
+  };
+
   return (
     <div className="h-full relative">
       <div className="p-5 border-b flex space-x-5 items-center">
@@ -48,6 +61,7 @@ const Sidebar = () => {
         />
         <ListNavigation
           title="Log Out"
+          onClick={handleLogout}
           icon={<ArrowRightOnRectangleIcon className="h-5 w-5" />}
         />
       </div>

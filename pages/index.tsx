@@ -3,21 +3,17 @@ import React, { ReactElement, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 
 const Login = () => {
   const router = useRouter();
   const { data, status } = useSession();
-  const handleLogin = () => {
-    // router.replace("/app/home");
-    signIn("google");
-  };
 
-  useEffect(() => {
-    if (status === "authenticated") {
-      router.replace("/app/home");
-    }
-  }, [status]);
+  // useEffect(() => {
+  //   if (status === "authenticated") {
+  //     router.replace("/app/home");
+  //   }
+  // }, [status]);
 
   return (
     <div>
@@ -41,7 +37,10 @@ const Login = () => {
         </p>
       </div>
       <div className="absolute right-5 left-5 bottom-5">
-        <button onClick={handleLogin} className="btn btn-primary w-full">
+        <button
+          onClick={() => router.push("/app/home")}
+          className="btn btn-primary w-full"
+        >
           Login Dengan Google
         </button>
       </div>

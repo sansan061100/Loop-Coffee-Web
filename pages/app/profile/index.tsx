@@ -3,6 +3,13 @@ import DetailLayout from "@/components/Layout/DetailLayout";
 import React, { ReactElement } from "react";
 
 const Profile = () => {
+  const sendDataToReactNative = () => {
+    if (typeof window !== "undefined") {
+      // @ts-ignore
+      window.ReactNativeWebView.postMessage("Hello React Native Web!");
+    }
+  };
+
   return (
     <div className="p-5">
       <div className="flex justify-center items-center">
@@ -28,7 +35,12 @@ const Profile = () => {
         />
       </div>
       <div className="footer-container">
-        <button className="btn btn-primary w-full mt-5">Simpan</button>
+        <button
+          onClick={sendDataToReactNative}
+          className="btn btn-primary w-full mt-5"
+        >
+          Simpan
+        </button>
       </div>
     </div>
   );
