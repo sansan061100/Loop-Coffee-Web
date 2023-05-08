@@ -5,13 +5,16 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { useSession, signIn } from "next-auth/react";
+import useAuthStore from "@/store/auth-store";
 
 const Login = () => {
   const router = useRouter();
   const { data, status } = useSession();
+  const getProfile = useAuthStore((state) => state.getProfile);
 
   useEffect(() => {
     if (status === "authenticated") {
+      getProfile();
       router.replace("/app/home");
     }
   }, [status]);

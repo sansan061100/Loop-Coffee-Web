@@ -26,13 +26,12 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             },
             signIn: async ({ account, profile, credentials }) => {
                 const token = account?.id_token;
-                console.log(profile);
                 try {
-                    const req = await axios.post(BASE_URL + '/customer/login', {
+                    const req = await axios.post(BASE_URL + '/login', {
                         email: profile?.email,
                         token: token
                     })
-                    const jwtToken = req.data.token;
+                    const jwtToken = req.data.result.token;
                     // set cookie
                     res.setHeader('Set-Cookie', `jwt_token=${jwtToken}; Max-Age=${60 * 60 * 24 * 27}; Path=/; Secure; SameSite=Strict`);
                     return true;

@@ -2,8 +2,11 @@ import React, { PropsWithChildren } from "react";
 import Header, { HeaderProps } from "./_Partials/Header";
 import BottomNavigation from "./_Partials/BottomNavigation";
 import MainLayout from "./MainLayout";
-import Sidebar from "../Sidebar";
+const Sidebar = dynamic(() => import("../Sidebar"), {
+  ssr: false,
+});
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
 const HomeLayout: React.FC<PropsWithChildren<HeaderProps>> = ({
   children,

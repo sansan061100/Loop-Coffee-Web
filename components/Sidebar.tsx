@@ -8,17 +8,21 @@ import {
 } from "@heroicons/react/24/outline";
 import ListNavigation from "./ListNavigation";
 import { signOut } from "next-auth/react";
-import nookies from "nookies";
+
+import useAuthStore from "@/store/auth-store";
 
 const Sidebar = () => {
+  const auth = useAuthStore((state) => state.user);
+  const logOut = useAuthStore((state) => state.logOut);
+
   const handleLogout = () => {
     const confirm = window.confirm("Apakah anda yakin ingin keluar?");
     if (confirm) {
-      nookies.destroy(null, "jwt_token");
       signOut({
         redirect: true,
         callbackUrl: "/",
       });
+      logOut();
     }
   };
 
@@ -27,20 +31,13 @@ const Sidebar = () => {
       <div className="p-5 border-b flex space-x-5 items-center">
         <div className="avatar">
           <div className="w-14 mask mask-squircle">
-            <Image
-              src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-              height={150}
-              width={150}
-              alt="Avatar"
-            />
+            <Image src={auth.avatar} height={150} width={150} alt="Avatar" />
           </div>
         </div>
         <div>
-          <h4 className="font-bold tracking-wide line-clamp-1">
-            Della Rianty Febrian
-          </h4>
+          <h4 className="font-bold tracking-wide line-clamp-1">{auth.name}</h4>
           <p className="text-sm text-gray-500 mt-1 line-clamp-1">
-            dellarianty@gmail.com
+            {auth.email}
           </p>
         </div>
       </div>
