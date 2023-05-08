@@ -21,9 +21,6 @@ const nextConfig = withPWA({
         hostname: "**",
       },
     ],
-  },
-  env: {
-    test: "okee"
   }
 })
 

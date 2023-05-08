@@ -31,9 +31,7 @@ const BottomNavigation = () => {
 
   return (
     <div
-      className={`btm-nav  pwa:fixed browser:lg:absolute opacity-1 border-t bg-white   ${
-        isIphoneHasNotch() && "bottom-7 drop-shadow-none"
-      }`}
+      className={`btm-nav  pwa:fixed browser:lg:absolute opacity-1 border-t bg-white `}
     >
       <Link href={"/app/home"} className={`${isActive("/app/home")}  `}>
         <MagnifyingGlassIcon className="h-5 w-5" strokeWidth={2} />

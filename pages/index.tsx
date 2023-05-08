@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import MainLayout from "@/components/Layout/MainLayout";
 import React, { ReactElement, useEffect } from "react";
 import Image from "next/image";
@@ -9,11 +10,11 @@ const Login = () => {
   const router = useRouter();
   const { data, status } = useSession();
 
-  // useEffect(() => {
-  //   if (status === "authenticated") {
-  //     router.replace("/app/home");
-  //   }
-  // }, [status]);
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/app/home");
+    }
+  }, [status]);
 
   return (
     <div>
@@ -38,7 +39,7 @@ const Login = () => {
       </div>
       <div className="absolute right-5 left-5 bottom-5">
         <button
-          onClick={() => router.push("/app/home")}
+          onClick={() => signIn("google")}
           className="btn btn-primary w-full"
         >
           Login Dengan Google

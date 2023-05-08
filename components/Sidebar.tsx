@@ -7,14 +7,14 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import ListNavigation from "./ListNavigation";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import nookies from "nookies";
 
 const Sidebar = () => {
-  const test = useSession();
-  console.log(test);
   const handleLogout = () => {
     const confirm = window.confirm("Apakah anda yakin ingin keluar?");
     if (confirm) {
+      nookies.destroy(null, "jwt_token");
       signOut({
         redirect: true,
         callbackUrl: "/",
