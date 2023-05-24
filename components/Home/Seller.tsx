@@ -13,13 +13,19 @@ export interface SellerProps {
   address: string;
 }
 
-const Seller: React.FC<SellerProps> = ({ banner, name, distance, address }) => {
+const Seller: React.FC<SellerProps> = ({
+  banner,
+  name,
+  distance,
+  address,
+  id,
+}) => {
   const router = useRouter();
 
   return (
     <div
       className="border-b hover:bg-gray-200 cursor-pointer"
-      onClick={() => router.push("/app/seller")}
+      onClick={() => router.push("/app/seller/" + id)}
     >
       <div className="card bg-base-100 h-32 rounded-none image-full">
         <figure>
