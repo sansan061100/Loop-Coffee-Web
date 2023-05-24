@@ -1,51 +1,48 @@
 import http from "@/utils/http";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import nookies from "nookies";
 
-type AauthStoreState = {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-};
+interface User {
+  id: number;
+  name: string;
+  avatar: string;
+  role: number;
+}
+interface AuthStore {
+  user: User;
+  isLogin: boolean;
+  login: (accessToken: string) => void;
+}
 
-type AuthStoreActions = {
-  getProfile: () => void;
-  logOut: () => void;
-};
-
-type AuthStore = AauthStoreState & AuthStoreActions;
-
-const initialState = {
-  name: "",
-  email: "",
-  avatar: "",
-};
-const authStore = (set: any) => ({
-  user: initialState,
-  getProfile: async () => {
-    const req = await http.get("/profile");
-    const { name, avatar, email } = req.data.result.user;
-    set({
-      user: {
-        name,
-        avatar,
-        email,
-      },
-    });
-  },
-  logOut: () => {
-    nookies.destroy(null, "jwt_token");
-    set({ user: initialState });
-  },
-});
-
-const useAuthStore = create(
-  persist<AuthStore>(authStore, {
+const authStore = persist<AuthStore>(
+  (set) => ({
+    user: {
+      id: 0,
+      name: "",
+      avatar: "",
+      role: 0,
+    },
+    isLogin: false,
+    login: async (accessToken) => {
+      try {
+        const req = await http.post("login", {
+          token: accessToken,
+        });
+        const { token, user } = req.data.result;
+        localStorage.setItem("token", token);
+        set({
+          user: user,
+          isLogin: true,
+        });
+        return Promise.resolve(user);
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    },
+  }),
+  {
     name: "auth-store",
-  })
+  }
 );
 
-export default useAuthStore;
+export const useAuthStore = create(authStore);

@@ -7,22 +7,14 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import ListNavigation from "./ListNavigation";
-import { signOut } from "next-auth/react";
-
-import useAuthStore from "@/store/auth-store";
+import { useAuthStore } from "@/store/auth-store";
 
 const Sidebar = () => {
-  const auth = useAuthStore((state) => state.user);
-  const logOut = useAuthStore((state) => state.logOut);
+  const user = useAuthStore((state) => state.user);
 
   const handleLogout = () => {
     const confirm = window.confirm("Apakah anda yakin ingin keluar?");
     if (confirm) {
-      signOut({
-        redirect: true,
-        callbackUrl: "/",
-      });
-      logOut();
     }
   };
 
@@ -31,13 +23,13 @@ const Sidebar = () => {
       <div className="p-5 border-b flex space-x-5 items-center">
         <div className="avatar">
           <div className="w-14 mask mask-squircle">
-            <Image src={auth.avatar} height={150} width={150} alt="Avatar" />
+            <Image src={user.avatar} height={150} width={150} alt="Avatar" />
           </div>
         </div>
         <div>
-          <h4 className="font-bold tracking-wide line-clamp-1">{auth.name}</h4>
+          <h4 className="font-bold tracking-wide line-clamp-1">{user.name}</h4>
           <p className="text-sm text-gray-500 mt-1 line-clamp-1">
-            {auth.email}
+            example@gmail.com
           </p>
         </div>
       </div>

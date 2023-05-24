@@ -2,22 +2,33 @@
 import MainLayout from "@/components/Layout/MainLayout";
 import React, { ReactElement, useEffect } from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import Head from "next/head";
-import { useSession, signIn } from "next-auth/react";
-import useAuthStore from "@/store/auth-store";
+import { useGoogleLogin } from "@react-oauth/google";
+import { useAuthStore } from "@/store/auth-store";
+import { shallow } from "zustand/shallow";
+import toast from "react-simple-toasts";
+import { useRouter } from "next/router";
 
 const Login = () => {
-  const router = useRouter();
-  const { data, status } = useSession();
-  const getProfile = useAuthStore((state) => state.getProfile);
+  const [login, isLogin] = useAuthStore(
+    (state) => [state.login, state.isLogin],
+    shallow
+  );
 
+  const handleLogin = useGoogleLogin({
+    onSuccess: async (res) => {
+      try {
+        await login(res.access_token);
+      } catch (error) {
+        toast("Opps something went wrong");
+      }
+    },
+  });
+
+  const router = useRouter();
   useEffect(() => {
-    if (status === "authenticated") {
-      getProfile();
-      router.replace("/app/home");
-    }
-  }, [status]);
+    if (isLogin) router.replace("/app/home");
+  }, [isLogin]);
 
   return (
     <div>
@@ -42,7 +53,7 @@ const Login = () => {
       </div>
       <div className="absolute right-5 left-5 bottom-5">
         <button
-          onClick={() => signIn("google")}
+          onClick={() => handleLogin()}
           className="btn btn-primary w-full"
         >
           Login Dengan Google

@@ -1,6 +1,11 @@
 import axios from "axios";
+import axiosRetry from "axios-retry";
 import { BASE_URL } from "./constant";
-import nookies from "nookies";
+
+const getToken = () => {
+  const token = localStorage.getItem("token");
+  return token;
+};
 
 const http = axios.create({
   baseURL: BASE_URL,
@@ -9,16 +14,43 @@ const http = axios.create({
   },
 });
 
+axiosRetry(http, {
+  retries: 2,
+  retryDelay: (retryCount) => {
+    return retryCount * 500;
+  },
+  retryCondition: (error: any) => {
+    return error.response?.status === 401 && error.response?.data.logout;
+  },
+  onRetry(retryCount, error, requestConfig: any) {
+    requestConfig.headers["Authorization"] = `Bearer ${getToken()}`;
+  },
+});
+
 http.interceptors.request.use(
   (config) => {
-    const cookies = nookies.get();
-    const token = cookies.jwt_token;
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    if (getToken()) {
+      config.headers["Authorization"] = `Bearer ${getToken()}`;
     }
     return config;
   },
+  (error) => Promise.reject(error)
+);
+
+http.interceptors.response.use(
+  (response: any) => {
+    if (response.headers["authorization"]) {
+      console.log("Token refresh");
+      localStorage.setItem("token", response.headers["authorization"]);
+      getToken();
+    }
+    return response;
+  },
   (error) => {
+    if (error.response?.status === 401 && error.response?.data.logout) {
+      window.location.href = "/";
+    }
+
     return Promise.reject(error);
   }
 );

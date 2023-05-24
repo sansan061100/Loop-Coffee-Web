@@ -3,7 +3,8 @@ import type { AppProps } from "next/app";
 import type { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 import AppLayout from "@/components/Layout/AppLayout";
-import { SessionProvider } from "next-auth/react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GOOGLE_CLIENT_ID } from "@/config/env";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -19,8 +20,8 @@ export default function App({ Component, pageProps, session }: any) {
     ((page: ReactElement) => <AppLayout>{page}</AppLayout>);
 
   return (
-    <SessionProvider session={session}>
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       {getLayout(<Component {...pageProps} />)}
-    </SessionProvider>
+    </GoogleOAuthProvider>
   );
 }
