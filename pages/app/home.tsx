@@ -2,10 +2,9 @@
 import Seller, { SellerProps } from "@/components/Home/Seller";
 import HomeLayout from "@/components/Layout/HomeLayout";
 import Loading from "@/components/Seller/Loading";
-import useMap from "@/hooks/useMap";
 import { useMapStore } from "@/store/map-store";
 import http from "@/utils/http";
-import React, { ReactElement, useState, useEffect } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { useQuery } from "react-query";
 import toast from "react-simple-toasts";
 
