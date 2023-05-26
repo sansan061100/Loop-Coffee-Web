@@ -18,6 +18,7 @@ const Login = () => {
   const handleLogin = useGoogleLogin({
     onSuccess: async (res) => {
       try {
+        console.log(res.access_token);
         await login(res.access_token);
       } catch (error) {
         toast("Opps something went wrong");

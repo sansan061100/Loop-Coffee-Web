@@ -4,8 +4,9 @@ import CartMenu from "@/components/Cart/CartMenu";
 
 export interface HeaderProps {
   title?: string;
+  children?: React.ReactNode;
 }
-const Header: React.FC<HeaderProps> = ({ title }) => {
+const Header: React.FC<HeaderProps> = ({ title, children }) => {
   return (
     <div className="navbar flex justify-between items-center sticky border-b top-0 z-50 bg-base-100">
       <div>
@@ -17,7 +18,8 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
         </label>
       </div>
       <div>
-        <a className="btn btn-ghost normal-case text-xl">{title}</a>
+        {title && <a className="btn btn-ghost normal-case text-xl">{title}</a>}
+        {children}
       </div>
       <div>
         <CartMenu />

@@ -1,23 +1,23 @@
+/* eslint-disable @next/next/no-img-element */
 import Seller, { SellerProps } from "@/components/Home/Seller";
 import HomeLayout from "@/components/Layout/HomeLayout";
 import Loading from "@/components/Seller/Loading";
+import useMap from "@/hooks/useMap";
+import { useMapStore } from "@/store/map-store";
 import http from "@/utils/http";
 import React, { ReactElement, useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import toast from "react-simple-toasts";
 
 const Home = () => {
-  const [location, setLocation] = useState({
-    latitude: 0,
-    longitude: 0,
-  });
+  const location = useMapStore((state) => state.location);
 
   const { data, isLoading } = useQuery(
-    ["sellers", location.latitude, location.longitude],
+    ["sellers", location.lat, location.long],
     async () => {
-      if (location.latitude === 0 && location.longitude === 0) return;
+      if (location.lat === 0 && location.long === 0) return;
       const req = await http.get(
-        `outlet?lat=${location.latitude}&lng=${location.longitude}&radius=10000`
+        `outlet?lat=${location.lat}&lng=${location.long}&radius=2`
       );
       return req.data.result;
     }
@@ -31,14 +31,7 @@ const Home = () => {
           const req = await navigator.permissions.query({
             name: "geolocation",
           });
-          if (req.state == "granted") {
-            await navigator.geolocation.getCurrentPosition((position) => {
-              setLocation({
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-              });
-            });
-          } else {
+          if (req.state != "granted") {
             toast("Location permission denied");
           }
         } catch (error: any) {
@@ -55,13 +48,24 @@ const Home = () => {
       {data?.map((val: SellerProps, i: number) => (
         <Seller key={i} {...val} />
       ))}
+      {data?.length === 0 && (
+        <div className="flex justify-center items-center h-screen -mt-20 space-x-5">
+          <img src="/img/search.png" alt="search" className="w-20 h-20" />
+          <div>
+            <h1 className="text-2xl font-bold">No Seller Found</h1>
+            <p className="text-gray-500 mt-1">
+              We couldn t find any seller near your location
+            </p>
+          </div>
+        </div>
+      )}
       <div className="h-5 w-full pb-48" />
     </div>
   );
 };
 
 Home.getLayout = (page: ReactElement) => {
-  return <HomeLayout title="Penjual Sekitar">{page}</HomeLayout>;
+  return <HomeLayout>{page}</HomeLayout>;
 };
 
 export default Home;
