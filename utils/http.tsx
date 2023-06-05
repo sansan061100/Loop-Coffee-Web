@@ -1,6 +1,7 @@
 import axios from "axios";
 import axiosRetry from "axios-retry";
 import { BASE_URL } from "./constant";
+import { useAuthStore } from "@/store/auth-store";
 
 const getToken = () => {
   const token = localStorage.getItem("token");
@@ -48,6 +49,7 @@ http.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401 && error.response?.data.logout) {
+      useAuthStore.getState().logout();
       window.location.href = "/";
     }
 

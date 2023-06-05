@@ -12,6 +12,7 @@ interface AuthStore {
   user: User;
   isLogin: boolean;
   login: (accessToken: string) => void;
+  logout: () => void;
 }
 
 const authStore = persist<AuthStore>(
@@ -38,6 +39,18 @@ const authStore = persist<AuthStore>(
       } catch (error) {
         return Promise.reject(error);
       }
+    },
+    logout: () => {
+      localStorage.removeItem("token");
+      set({
+        user: {
+          id: 0,
+          name: "",
+          avatar: "",
+          role: 0,
+        },
+        isLogin: false,
+      });
     },
   }),
   {

@@ -1,6 +1,9 @@
 import React from "react";
 import { Bars3BottomLeftIcon } from "@heroicons/react/24/outline";
-import CartMenu from "@/components/Cart/CartMenu";
+import dynamic from "next/dynamic";
+const CartMenu = dynamic(() => import("@/components/Cart/CartMenu"), {
+  ssr: false,
+});
 
 export interface HeaderProps {
   title?: string;

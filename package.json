@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.17",
+    "@mpth/react-no-ssr": "^1.0.1",
     "@react-google-maps/api": "^2.18.1",
     "@react-oauth/google": "^0.11.0",
     "@tailwindcss/line-clamp": "^0.4.4",

@@ -1,12 +1,25 @@
-import CartMenu from "@/components/Cart/CartMenu";
+const CartMenu = dynamic(() => import("@/components/Cart/CartMenu"), {
+  ssr: false,
+});
 import DetailLayout from "@/components/Layout/DetailLayout";
-import ListProduct from "@/components/Seller/ListProduct";
 import LoadingDetail from "@/components/Seller/LoadingDetail";
+import Product, { ProductProps } from "@/components/Seller/Product";
+import { useCartStore } from "@/store/cart-store";
 import http from "@/utils/http";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { Fragment, ReactElement } from "react";
 import { useQuery } from "react-query";
+import toast from "react-simple-toasts";
+import { shallow } from "zustand/shallow";
+
+interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  product: ProductProps[];
+}
 
 const Seller = () => {
   const { query } = useRouter();
@@ -14,6 +27,22 @@ const Seller = () => {
     const req = await http.get(`outlet/${query.seller}`);
     return req.data?.result;
   });
+
+  const [cart, setCart, store, setStore] = useCartStore(
+    (state) => [state.data, state.setCart, state.store, state.setStore],
+    shallow
+  );
+
+  const handleAddCart = (val: ProductProps) => {
+    // check if store already set
+    setStore({
+      id: data?.outlet.id,
+      name: data?.outlet.name,
+      address: data?.outlet.address,
+    });
+
+    setCart({ ...val, qty: 1 });
+  };
 
   return (
     <div>
@@ -40,7 +69,20 @@ const Seller = () => {
             </div>
           </div>
           <div className="pb-40">
-            <ListProduct data={data?.kategori} />
+            {data.kategori.map((val: Category) => (
+              <div key={val.id}>
+                <h4 className="text-lg font-bold px-5 py-3 bg-gray-50">
+                  {val.name}
+                </h4>
+                {val.product.map((item) => (
+                  <Product
+                    key={item.id}
+                    {...item}
+                    onClick={() => handleAddCart(item)}
+                  />
+                ))}
+              </div>
+            ))}
           </div>
         </Fragment>
       )}
