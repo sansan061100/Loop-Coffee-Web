@@ -1,3 +1,5 @@
+import { useMapStore } from "@/store/map-store";
+
 import {
   ChevronRightIcon,
   MapPinIcon,
@@ -6,8 +8,20 @@ import {
 import Link from "next/link";
 import React, { useState } from "react";
 
-const ShippingMethod = () => {
+interface Props {
+  address: string;
+  lat: number;
+  long: number;
+}
+const ShippingMethod: React.FC<Props> = ({ address, lat, long }) => {
   const [method, setMethod] = useState(0);
+  const myLocation = useMapStore((state) => state.location);
+
+  const getUrlDirectionMapsStore = () => {
+    const url = `https://www.google.com/maps/dir/?api=1&origin=${myLocation.lat},${myLocation.long}&destination=${lat},${long}&travelmode=driving`;
+    return url;
+  };
+
   return (
     <div>
       <div className="tabs w-full">
@@ -34,23 +48,19 @@ const ShippingMethod = () => {
             <div className="flex space-x-5 items-center">
               <MapPinIcon className="h-6 w-6" />
               <div>
-                <p className="text-sm">
-                  Panyingkiran, Tasikmalaya, West Java, 46151, Indonesia
-                </p>
+                <p className="text-sm">{myLocation.address}</p>
               </div>
             </div>
             <ChevronRightIcon className="h-6 w-6 text-gray-500" />
           </div>
         </Link>
       ) : (
-        <Link href={"/app/profile/address"}>
+        <Link target="_blank" href={getUrlDirectionMapsStore()}>
           <div className="flex justify-between items-center p-5 border-b">
             <div className="flex space-x-5 items-center">
               <BuildingStorefrontIcon className="h-6 w-6" />
               <div>
-                <p className="text-sm">
-                  Panyingkiran, Tasikmalaya, West Java, 46151, Indonesia
-                </p>
+                <p className="text-sm">{address}</p>
               </div>
             </div>
             <ChevronRightIcon className="h-6 w-6 text-gray-500" />

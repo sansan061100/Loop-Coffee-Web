@@ -3,6 +3,7 @@ import Seller, { SellerProps } from "@/components/Home/Seller";
 import HomeLayout from "@/components/Layout/HomeLayout";
 import Loading from "@/components/Seller/Loading";
 import { useMapStore } from "@/store/map-store";
+import { RADIUS } from "@/utils/constant";
 import http from "@/utils/http";
 import React, { ReactElement, useEffect } from "react";
 import { useQuery } from "react-query";
@@ -16,7 +17,7 @@ const Home = () => {
     async () => {
       if (location.lat === 0 && location.long === 0) return;
       const req = await http.get(
-        `outlet?lat=${location.lat}&lng=${location.long}&radius=2`
+        `outlet?lat=${location.lat}&lng=${location.long}&radius=${RADIUS}`
       );
       return req.data.result;
     }
