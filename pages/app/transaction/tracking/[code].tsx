@@ -1,7 +1,7 @@
 import DetailLayout from "@/components/Layout/DetailLayout";
 import LoadingDetail from "@/components/Transaction/LoadingDetail";
 import { useMapStore } from "@/store/map-store";
-import { SHIPPING } from "@/utils/constant";
+import { SHIPPING, TRANSACTION } from "@/utils/constant";
 import helper from "@/utils/helper";
 import http from "@/utils/http";
 import {
@@ -63,17 +63,19 @@ const Tracking = () => {
         <LoadingDetail />
       ) : (
         <>
-          <div className="alert rounded-none">
-            {data.shipping_type == SHIPPING.SEND ? (
-              <p className="text-sm text-gray-500">
-                Pesanan akan diantar oleh penjual
-              </p>
-            ) : (
-              <p className="text-sm text-gray-500">
-                Segera ambil pesananmu di outlet
-              </p>
-            )}
-          </div>
+          {data.status == TRANSACTION.WAITING && (
+            <div className="alert rounded-none">
+              {data.shipping_type == SHIPPING.SEND ? (
+                <p className="text-sm text-gray-500">
+                  Pesanan akan diantar oleh penjual
+                </p>
+              ) : (
+                <p className="text-sm text-gray-500">
+                  Segera ambil pesananmu di outlet
+                </p>
+              )}
+            </div>
+          )}
           <div className="p-5 space-y-4 border-b">
             <div className="flex space-x-5 items-center">
               <BuildingStorefrontIcon className="h-6 w-6 text-primary-500" />

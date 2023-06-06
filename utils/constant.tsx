@@ -7,3 +7,8 @@ export const SHIPPING = {
   SEND: 1,
   PICKUP: 2,
 };
+
+export const TRANSACTION = {
+  WAITING: 0,
+  SUCCESS: 1,
+};

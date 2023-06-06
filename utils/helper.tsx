@@ -53,6 +53,28 @@ const helper = {
       dateSplit[0]
     }`;
   },
+
+  dateTime: (date: string) => {
+    if (!date) return "-";
+    const month = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "Nopember",
+      "Desember",
+    ];
+    const dateSplit = date.split(" ")[0].split("-");
+    return `${dateSplit[2]} ${month[parseInt(dateSplit[1]) - 1]} ${
+      dateSplit[0]
+    } ${date.split(" ")[1].split(":").slice(0, 2).join(":")}`;
+  },
 };
 
 export default helper;
