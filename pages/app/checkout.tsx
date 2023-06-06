@@ -5,15 +5,21 @@ import { useCartStore } from "@/store/cart-store";
 import React, { ReactElement, useEffect } from "react";
 import NoSSR from "@mpth/react-no-ssr";
 import haversine from "haversine";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import http from "@/utils/http";
 import { useRouter } from "next/router";
 import { useMapStore } from "@/store/map-store";
 import { RADIUS } from "@/utils/constant";
+import { useShippingStore } from "@/store/shipping-store";
+import toast from "react-simple-toasts";
+import { shallow } from "zustand/shallow";
 
 const Checkout = () => {
   const store = useCartStore((state) => state.store);
-  const cart = useCartStore((state) => state.data);
+  const [cart, destroyCart, destoryStore] = useCartStore(
+    (state) => [state.data, state.destroyCart, state.destoryStore],
+    shallow
+  );
 
   const { data, isLoading } = useQuery(["store", store.id], async () => {
     const req = await http.get(`/outlet/${store.id}`);
@@ -29,7 +35,8 @@ const Checkout = () => {
   }, [cart.length]);
 
   const myLocation = useMapStore((state) => state.location);
-  const handleCheckout = () => {
+  const shipping = useShippingStore((state) => state.data);
+  const handleCheckout = async () => {
     const start = {
       latitude: myLocation.lat,
       longitude: myLocation.long,
@@ -44,7 +51,40 @@ const Checkout = () => {
     if (Math.round(distance) > RADIUS * 1000) {
       return alert("Jarak anda melebihi batas maksimal");
     }
+    await mutation.mutateAsync();
   };
+
+  const mutation = useMutation(
+    async () => {
+      const req = await http.post("/order", {
+        address: myLocation.address,
+        lat: myLocation.lat,
+        lng: myLocation.long,
+        shipping_type: shipping,
+        outlet: store.id,
+        cart: cart.map((item) => {
+          return {
+            product: item.id,
+            qty: item.qty,
+          };
+        }),
+      });
+      return req.data;
+    },
+    {
+      onSuccess: (data) => {
+        router.replace("/app/transaction/tracking/" + data.result.code);
+        setTimeout(() => {
+          destoryStore();
+          destroyCart();
+        }, 1000);
+      },
+      onError: (error) => {
+        toast("Ops, terjadi kesalahan");
+        console.log(error);
+      },
+    }
+  );
 
   return (
     <NoSSR>
@@ -72,11 +112,13 @@ const Checkout = () => {
         </div>
         <div className="footer-container">
           <button
-            className={`btn btn-primary w-full ${isLoading ? "loading" : ""}`}
-            disabled={isLoading}
+            className={`btn btn-primary w-full ${
+              isLoading || mutation.isLoading ? "loading" : ""
+            }`}
+            disabled={isLoading || mutation.isLoading}
             onClick={handleCheckout}
           >
-            {isLoading ? "Loading ..." : "Lanjutkan Pembayaran"}
+            {isLoading || mutation.isLoading ? "Loading ..." : "Pesan Sekarang"}
           </button>
         </div>
       </div>
