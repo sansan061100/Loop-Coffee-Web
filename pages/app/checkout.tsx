@@ -77,7 +77,7 @@ const Checkout = () => {
         setTimeout(() => {
           destoryStore();
           destroyCart();
-        }, 1000);
+        }, 2000);
       },
       onError: (error) => {
         toast("Ops, terjadi kesalahan");
