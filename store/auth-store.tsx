@@ -13,6 +13,7 @@ interface AuthStore {
   isLogin: boolean;
   login: (accessToken: string) => void;
   logout: () => void;
+  updateAuth: (name: string, avatar: string) => void;
 }
 
 const authStore = persist<AuthStore>(
@@ -51,6 +52,16 @@ const authStore = persist<AuthStore>(
         },
         isLogin: false,
       });
+    },
+
+    updateAuth: (name: string, avatar: string) => {
+      set((state) => ({
+        user: {
+          ...state.user,
+          name,
+          avatar,
+        },
+      }));
     },
   }),
   {
