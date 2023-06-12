@@ -1,7 +1,12 @@
 import DetailLayout from "@/components/Layout/DetailLayout";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { ReactElement, useLayoutEffect } from "react";
-import MapPicker from "@/components/Address/MapPicker";
+const MapPicker = dynamic(() => import("@/components/Address/MapPicker"), {
+  ssr: false,
+});
 
 const Address = () => {
   const router = useRouter();
@@ -19,6 +24,7 @@ const Address = () => {
           router.back();
         }
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -29,7 +35,21 @@ const Address = () => {
 };
 
 Address.getLayout = (page: ReactElement) => {
-  return <DetailLayout title="Alamat">{page}</DetailLayout>;
+  return (
+    <DetailLayout
+      title="Alamat"
+      navEnd={
+        <Link
+          href={"/app/profile/address/search"}
+          className="btn btn-ghost btn-circle"
+        >
+          <MagnifyingGlassIcon className="h-6 w-6" />
+        </Link>
+      }
+    >
+      {page}
+    </DetailLayout>
+  );
 };
 
 export default Address;

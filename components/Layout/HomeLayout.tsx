@@ -2,22 +2,27 @@ import React, { PropsWithChildren } from "react";
 import Header, { HeaderProps } from "./_Partials/Header";
 import BottomNavigation from "./_Partials/BottomNavigation";
 import MainLayout from "./MainLayout";
-import Sidebar from "../Sidebar";
+const Sidebar = dynamic(() => import("../Sidebar"), {
+  ssr: false,
+});
 import Head from "next/head";
+import dynamic from "next/dynamic";
+const MapHeader = dynamic(() => import("../MapHeader"), {
+  ssr: false,
+});
 
-const HomeLayout: React.FC<PropsWithChildren<HeaderProps>> = ({
-  children,
-  title,
-}) => {
+const HomeLayout: React.FC<PropsWithChildren<HeaderProps>> = ({ children }) => {
   return (
     <MainLayout>
       <Head>
-        <title>{`${title} - Loop Coffee`}</title>
+        <title>{`Home Page - Loop Coffee`}</title>
       </Head>
       <div className="drawer">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
-          <Header title={title} />
+          <Header>
+            <MapHeader />
+          </Header>
           <div className="overflow-y-auto h-full">{children}</div>
           <div className="z-50">
             <BottomNavigation />

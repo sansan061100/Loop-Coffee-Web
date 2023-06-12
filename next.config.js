@@ -21,7 +21,7 @@ const nextConfig = withPWA({
         hostname: "**",
       },
     ],
-  },
+  }
 })
 
 module.exports = nextConfig

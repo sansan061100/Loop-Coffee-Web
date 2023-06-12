@@ -7,27 +7,29 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import ListNavigation from "./ListNavigation";
+import { useAuthStore } from "@/store/auth-store";
 
 const Sidebar = () => {
+  const user = useAuthStore((state) => state.user);
+
+  const handleLogout = () => {
+    const confirm = window.confirm("Apakah anda yakin ingin keluar?");
+    if (confirm) {
+    }
+  };
+
   return (
     <div className="h-full relative">
       <div className="p-5 border-b flex space-x-5 items-center">
         <div className="avatar">
           <div className="w-14 mask mask-squircle">
-            <Image
-              src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-              height={150}
-              width={150}
-              alt="Avatar"
-            />
+            <Image src={user.avatar} height={150} width={150} alt="Avatar" />
           </div>
         </div>
         <div>
-          <h4 className="font-bold tracking-wide line-clamp-1">
-            Della Rianty Febrian
-          </h4>
+          <h4 className="font-bold tracking-wide line-clamp-1">{user.name}</h4>
           <p className="text-sm text-gray-500 mt-1 line-clamp-1">
-            dellarianty@gmail.com
+            example@gmail.com
           </p>
         </div>
       </div>
@@ -48,6 +50,7 @@ const Sidebar = () => {
         />
         <ListNavigation
           title="Log Out"
+          onClick={handleLogout}
           icon={<ArrowRightOnRectangleIcon className="h-5 w-5" />}
         />
       </div>

@@ -1,4 +1,6 @@
+import { MAP_KEY } from "@/config/env";
 import { Html, Head, Main, NextScript } from "next/document";
+import Script from "next/script";
 
 export default function Document() {
   return (
@@ -13,6 +15,12 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
+        <Script
+          id="googlemaps"
+          type="text/javascript"
+          strategy="beforeInteractive"
+          src={`https://maps.googleapis.com/maps/api/js?key=${MAP_KEY}&libraries=places`}
+        />
       </body>
     </Html>
   );

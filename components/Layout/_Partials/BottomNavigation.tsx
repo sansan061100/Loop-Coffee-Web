@@ -16,8 +16,23 @@ const BottomNavigation = () => {
     return router.pathname === path ? "active" : "text-gray-400";
   };
 
+  const isIphoneHasNotch = () => {
+    // check if iphone has notch and stand alone mode
+    if (typeof window === "undefined") return false;
+    if (
+      window.matchMedia("(display-mode: standalone)").matches &&
+      window.matchMedia("(max-device-width: 414px)").matches &&
+      window.matchMedia("(max-device-height: 896px)").matches
+    ) {
+      return true;
+    }
+    return true;
+  };
+
   return (
-    <div className="btm-nav  pwa:fixed browser:lg:absolute opacity-1 border-t bg-white drop-shadow-xl">
+    <div
+      className={`btm-nav  pwa:fixed browser:lg:absolute opacity-1 border-t bg-white `}
+    >
       <Link href={"/app/home"} className={`${isActive("/app/home")}  `}>
         <MagnifyingGlassIcon className="h-5 w-5" strokeWidth={2} />
         <span className="btm-nav-label text-sm">Explore</span>
@@ -29,13 +44,13 @@ const BottomNavigation = () => {
         <ReceiptPercentIcon className="h-5 w-5" strokeWidth={2} />
         <span className="btm-nav-label text-sm">Transaksi</span>
       </Link>
-      <Link
+      {/* <Link
         href={"/app/notification"}
         className={`${isActive("/app/notification")} `}
       >
         <BellIcon className="h-5 w-5" strokeWidth={2} />
         <span className="btm-nav-label text-sm">Notifikasi</span>
-      </Link>
+      </Link> */}
     </div>
   );
 };

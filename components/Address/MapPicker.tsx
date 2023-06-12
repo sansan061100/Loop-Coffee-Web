@@ -1,8 +1,12 @@
 import { MAP_KEY } from "@/config/env";
 import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import MyLocationButton from "./MyLocationButton";
-import axios from "axios";
+import { useMapStore } from "@/store/map-store";
+import useMap from "@/hooks/useMap";
+import { useRouter } from "next/router";
+import toast from "react-simple-toasts";
+import { useMapSelectedStore } from "@/store/map-selected-store";
 
 const MapPicker = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -10,47 +14,87 @@ const MapPicker = () => {
     lat: 0,
     lng: 0,
   });
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState({
+    long: "",
+    short: "",
+  });
 
+  // initialize google map
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: MAP_KEY,
     region: "ID",
     language: "id",
   });
 
-  const getMyLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setLocation({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      });
-    });
-  };
-
-  useEffect(() => {
-    getMyLocation();
-  }, []);
-
-  useEffect(() => {
-    if (location.lat === 0 && location.lng === 0) return;
-    const URL = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${MAP_KEY}`;
-    const fetchAddress = async () => {
-      setIsLoading(true);
-      await axios.get(URL).then((res) => {
-        setAddress(res.data.results[0].formatted_address);
-      });
-      setIsLoading(false);
-    };
-    fetchAddress();
-  }, [location]);
-
-  const onChangeMarker = (e: google.maps.MapMouseEvent) => {
-    const { lat, lng }: any = e.latLng?.toJSON();
+  // update location to state tmp
+  const updateLocation = async (lat: number, lng: number) => {
+    setIsLoading(true);
     setLocation({
       lat,
       lng,
     });
+    const newAddress: any = await getGeolocation(lat, lng);
+    setAddress({
+      long: newAddress.address,
+      short: newAddress.shortAddress,
+    });
+    setIsLoading(false);
   };
+
+  // get location from browser
+  const { getGeolocation } = useMap();
+  const getMyLocation = () => {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+      await updateLocation(latitude, longitude);
+    });
+  };
+
+  // initialize location from store
+  const locationStore = useMapStore((state) => state.location);
+  useEffect(() => {
+    setLocation({
+      lat: locationStore.lat,
+      lng: locationStore.long,
+    });
+    setAddress({
+      long: locationStore.address,
+      short: locationStore.shortAddress,
+    });
+  }, [locationStore]);
+
+  const onChangeMarker = async (e: google.maps.MapMouseEvent) => {
+    const { lat, lng }: any = e.latLng?.toJSON();
+    await updateLocation(lat, lng);
+  };
+
+  const router = useRouter();
+  const setLocationToDB = useMapStore((state) => state.setLocation);
+  const handleSubmitLocation = () => {
+    setLocationToDB({
+      lat: location.lat,
+      long: location.lng,
+      address: address.long,
+      shortAddress: address.short,
+    });
+    toast("Berhasil mengubah lokasi");
+    router.back();
+  };
+
+  // handle selected search
+  const selectedLocation = useMapSelectedStore((state) => state.location);
+  useEffect(() => {
+    if (selectedLocation.lat !== 0) {
+      setLocation({
+        lat: selectedLocation.lat,
+        lng: selectedLocation.long,
+      });
+      setAddress({
+        long: selectedLocation.address,
+        short: selectedLocation.shortAddress,
+      });
+    }
+  }, [selectedLocation]);
 
   return (
     <div className="flex h-screen flex-col">
@@ -81,7 +125,7 @@ const MapPicker = () => {
         <h1 className="font-bold text-lg">Pilih Alamat Pengantaran</h1>
         <div className="mt-5">
           {!isLoading ? (
-            <p>{address}</p>
+            <p>{address.long}</p>
           ) : (
             <div className="animate-pulse">
               <div className="h-4 w-full bg-gray-200 rounded-sm"></div>
@@ -91,7 +135,12 @@ const MapPicker = () => {
         </div>
       </div>
       <div className="footer-container">
-        <button className="btn btn-primary w-full">Konfirmasi Alamat</button>
+        <button
+          className="btn btn-primary w-full"
+          onClick={handleSubmitLocation}
+        >
+          Konfirmasi Alamat
+        </button>
       </div>
     </div>
   );
