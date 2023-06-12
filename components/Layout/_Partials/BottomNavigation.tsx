@@ -44,13 +44,13 @@ const BottomNavigation = () => {
         <ReceiptPercentIcon className="h-5 w-5" strokeWidth={2} />
         <span className="btm-nav-label text-sm">Transaksi</span>
       </Link>
-      <Link
+      {/* <Link
         href={"/app/notification"}
         className={`${isActive("/app/notification")} `}
       >
         <BellIcon className="h-5 w-5" strokeWidth={2} />
         <span className="btm-nav-label text-sm">Notifikasi</span>
-      </Link>
+      </Link> */}
     </div>
   );
 };

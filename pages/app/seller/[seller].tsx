@@ -69,7 +69,7 @@ const Seller = () => {
             </div>
           </div>
           <div className="pb-40">
-            {data.kategori.map((val: Category) => (
+            {data?.kategori.map((val: Category) => (
               <div key={val.id}>
                 <h4 className="text-lg font-bold px-5 py-3 bg-gray-50">
                   {val.name}

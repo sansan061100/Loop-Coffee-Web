@@ -64,7 +64,7 @@ const Tracking = () => {
       ) : (
         <>
           {data.status == TRANSACTION.WAITING && (
-            <div className="alert rounded-none">
+            <div className="alert rounded-none flex justify-center">
               {data.shipping_type == SHIPPING.SEND ? (
                 <p className="text-sm text-gray-500">
                   Pesanan akan diantar oleh penjual
@@ -98,7 +98,9 @@ const Tracking = () => {
               onClick={openMap}
             >
               <div className="flex space-x-5 items-center">
-                <MapPinIcon className="h-6 w-6 text-primary-500" />
+                <div className="flex-1">
+                  <MapPinIcon className="h-6 w-6 text-primary-500" />
+                </div>
                 <p className="font-medium line-clamp-1 border-b border-dashed ">
                   {data?.address}
                 </p>
@@ -132,11 +134,13 @@ const Tracking = () => {
               </li>
             </ul>
           </div>
-          <div className="footer-container">
-            <button className="btn btn-primary w-full" onClick={callWa}>
-              Hubungi Penjual
-            </button>
-          </div>
+          {data.status == TRANSACTION.WAITING && (
+            <div className="footer-container">
+              <button className="btn btn-primary w-full" onClick={callWa}>
+                Hubungi Penjual
+              </button>
+            </div>
+          )}
         </>
       )}
     </div>
