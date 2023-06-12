@@ -10,6 +10,10 @@ export default function Document() {
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
         <meta name="theme-color" content="#ffffff" />
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        ></meta>
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
       </Head>
       <body>
