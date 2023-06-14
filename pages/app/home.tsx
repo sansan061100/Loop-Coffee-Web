@@ -28,12 +28,12 @@ const Home = () => {
       if (navigator.geolocation) {
         // check permission
         try {
+          await requestPermission();
           const req = await navigator.permissions.query({
             name: "geolocation",
           });
-          console.log(req.state);
           if (req.state != "granted") {
-            toast("Location permission denied");
+            await requestPermission();
           }
         } catch (error: any) {
           throw new Error(error);
@@ -42,6 +42,12 @@ const Home = () => {
     };
     getPermission();
   }, []);
+
+  const requestPermission = async () => {
+    await navigator.permissions.query({
+      name: "geolocation",
+    });
+  };
 
   return (
     <div>
