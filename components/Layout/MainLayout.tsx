@@ -3,7 +3,9 @@ import React, { PropsWithChildren } from "react";
 const MainLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className="flex justify-center items-center">
-      <div className="artboard  lg:w-2/5 min-h-screen bg-white">{children}</div>
+      <div className="artboard  relative lg:w-4/12  bg-white h-screen">
+        {children}
+      </div>
     </div>
   );
 };

@@ -3,5 +3,30 @@
 @tailwind utilities;
 
 body {
-  @apply min-h-screen bg-gray-100;
+  @apply h-screen bg-gray-100 pwa:overflow-y-hidden browser:lg:overflow-hidden;
+}
+
+.card.image-full:before {
+  @apply z-0 rounded-none;
+}
+
+@layer components {
+  .main-wrapper {
+    @apply artboard  relative lg:w-2  bg-white;
+  }
+
+  .footer-container {
+    @apply browser:lg:absolute pwa:fixed fixed bottom-5 right-5 left-5;
+  }
+
+  .drawer-toggle ~ .drawer-content {
+    @apply overflow-y-hidden;
+  }
+  .tab {
+    @apply bg-gray-100 text-base text-gray-400 tracking-wide;
+  }
+
+  .tab-active {
+    @apply bg-white  font-bold text-base text-black;
+  }
 }
