@@ -1,0 +1,23 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "app.vercel.loop_coffee.twa",
+            "sha256_cert_fingerprints": [
+                "99:0E:CC:3F:B5:20:E4:04:A6:2B:DB:B7:12:BE:6E:E3:3D:09:2F:FF:AE:87:AF:33:10:8B:59:8D:1F:0F:8B:98"
+            ]
+        }
+    },
+    {
+        "relation": [
+            "check_validation"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "app.vercel.loop_coffee.twa"
+        }
+    }
+]
