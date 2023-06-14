@@ -32,6 +32,7 @@ const Home = () => {
           const req = await navigator.permissions.query({
             name: "geolocation",
           });
+          console.log(req.state);
           if (req.state != "granted") {
             await requestPermission();
           }
