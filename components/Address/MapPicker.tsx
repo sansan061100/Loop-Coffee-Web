@@ -44,10 +44,15 @@ const MapPicker = () => {
   // get location from browser
   const { getGeolocation } = useMap();
   const getMyLocation = () => {
-    navigator.geolocation.getCurrentPosition(async (position) => {
-      const { latitude, longitude } = position.coords;
-      await updateLocation(latitude, longitude);
-    });
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        await updateLocation(latitude, longitude);
+      },
+      async (err) => {
+        console.log(err);
+      }
+    );
   };
 
   // initialize location from store
