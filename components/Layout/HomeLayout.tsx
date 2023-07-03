@@ -10,7 +10,6 @@ import dynamic from "next/dynamic";
 const MapHeader = dynamic(() => import("../MapHeader"), {
   ssr: false,
 });
-
 const HomeLayout: React.FC<PropsWithChildren<HeaderProps>> = ({ children }) => {
   return (
     <MainLayout>
@@ -23,9 +22,11 @@ const HomeLayout: React.FC<PropsWithChildren<HeaderProps>> = ({ children }) => {
           <Header>
             <MapHeader />
           </Header>
-          <div className="overflow-y-auto h-full">{children}</div>
-          <div className="z-50">
-            <BottomNavigation />
+          <div className="overflow-y-auto h-full">
+            {children}
+            <div className="z-50">
+              <BottomNavigation />
+            </div>
           </div>
         </div>
         <div className="drawer-side">
