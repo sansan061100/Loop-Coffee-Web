@@ -1,10 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
-  BellIcon,
   MagnifyingGlassIcon,
   ReceiptPercentIcon,
-  ShoppingCartIcon,
-  UserIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -16,22 +13,27 @@ const BottomNavigation = () => {
     return router.pathname === path ? "active" : "text-gray-400";
   };
 
-  const isIphoneHasNotch = () => {
-    // check if iphone has notch and stand alone mode
-    if (typeof window === "undefined") return false;
-    if (
-      window.matchMedia("(display-mode: standalone)").matches &&
-      window.matchMedia("(max-device-width: 414px)").matches &&
-      window.matchMedia("(max-device-height: 896px)").matches
-    ) {
-      return true;
+  const [isHasNotch, setIsHasNotch] = useState(false);
+  useEffect(() => {
+    // check if iphone has notch and has gesture
+    if (typeof window !== "undefined") {
+      const userAgent = window.navigator.userAgent;
+      const isIOS = userAgent.includes("iPhone");
+      const hasNotch = window.screen.height >= 812;
+      const hasGesture = window.matchMedia(
+        "(display-mode: standalone)"
+      ).matches;
+      if (isIOS && hasNotch && hasGesture) {
+        setIsHasNotch(true);
+      }
     }
-    return true;
-  };
+  }, []);
 
   return (
     <div
-      className={`btm-nav  pwa:fixed browser:lg:absolute opacity-1 border-t bg-white `}
+      className={`btm-nav  pwa:fixed browser:lg:absolute opacity-1 border-t bg-white ${
+        isHasNotch ? "mb-6" : ""
+      }`}
     >
       <Link href={"/app/home"} className={`${isActive("/app/home")}  `}>
         <MagnifyingGlassIcon className="h-5 w-5" strokeWidth={2} />
@@ -44,13 +46,6 @@ const BottomNavigation = () => {
         <ReceiptPercentIcon className="h-5 w-5" strokeWidth={2} />
         <span className="btm-nav-label text-sm">Transaksi</span>
       </Link>
-      {/* <Link
-        href={"/app/notification"}
-        className={`${isActive("/app/notification")} `}
-      >
-        <BellIcon className="h-5 w-5" strokeWidth={2} />
-        <span className="btm-nav-label text-sm">Notifikasi</span>
-      </Link> */}
     </div>
   );
 };
