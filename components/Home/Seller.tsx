@@ -26,7 +26,7 @@ const Seller: React.FC<SellerProps> = ({
 
   return (
     <div
-      className="border-b flex space-x-5 p-3 items-center hover:bg-gray-200 cursor-pointer"
+      className="border-b flex space-x-5 px-3  items-center hover:bg-gray-200 cursor-pointer"
       onClick={() => router.push("/app/seller/" + id)}
     >
       <div>
