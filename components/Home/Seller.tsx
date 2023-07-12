@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
+import { AVATAR } from "@/utils/constant";
 
 export interface SellerProps {
   id: number;
@@ -11,43 +12,37 @@ export interface SellerProps {
   banner?: any;
   distance: string;
   address: string;
+  avatar?: string;
 }
 
 const Seller: React.FC<SellerProps> = ({
-  banner,
   name,
   distance,
   address,
+  avatar,
   id,
 }) => {
   const router = useRouter();
 
   return (
     <div
-      className="border-b hover:bg-gray-200 cursor-pointer"
+      className="border-b flex space-x-5 p-3 items-center hover:bg-gray-200 cursor-pointer"
       onClick={() => router.push("/app/seller/" + id)}
     >
-      <div className="card bg-base-100 h-32 rounded-none image-full">
-        <figure>
-          {banner && (
-            <Image
-              src={banner}
-              alt={name}
-              height={420}
-              width={500}
-              className="w-full"
-            />
-          )}
-        </figure>
-        <div className="card-body flex justify-center items-center">
-          <h2 className="card-title z-0">{name}</h2>
-        </div>
+      <div>
+        <Image
+          src={avatar ?? AVATAR}
+          alt="banner"
+          height={85}
+          width={85}
+          className="rounded-lg"
+        />
       </div>
-      <div className="p-5">
-        <h4 className="font-medium line-clamp-1">{address}</h4>
-        <div className="flex items-center space-x-3 mt-3">
-          <MapPinIcon className="h-4 w-4" />
-          <p className="text-sm text-gray-500">
+      <div className="py-3 ">
+        <h2 className="font-semibold z-0">{name}</h2>
+        <p className="text-sm mt-2 line-clamp-1 text-gray-400">{address}</p>
+        <div className="flex items-center mt-2">
+          <p className="text-xs text-gray-400">
             Jarak <span className="capitalize">{distance}</span>
           </p>
         </div>
