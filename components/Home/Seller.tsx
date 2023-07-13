@@ -29,14 +29,16 @@ const Seller: React.FC<SellerProps> = ({
       className="border-b flex space-x-5 px-3  items-center hover:bg-gray-200 cursor-pointer"
       onClick={() => router.push("/app/seller/" + id)}
     >
-      <div>
-        <Image
-          src={avatar ?? AVATAR}
-          alt="banner"
-          height={85}
-          width={85}
-          className="rounded-lg"
-        />
+      <div className="avatar">
+        <div className="w-20 rounded">
+          <Image
+            height={100}
+            width={100}
+            src={avatar ?? AVATAR}
+            alt="banner"
+            className="rounded-lg w-full h-full"
+          />
+        </div>
       </div>
       <div className="py-3 ">
         <h2 className="font-semibold z-0">{name}</h2>
