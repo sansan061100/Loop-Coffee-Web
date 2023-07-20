@@ -8,13 +8,23 @@ import {
 } from "@heroicons/react/24/outline";
 import ListNavigation from "./ListNavigation";
 import { useAuthStore } from "@/store/auth-store";
+import { useRouter } from "next/router";
+import http from "@/utils/http";
 
 const Sidebar = () => {
+  const router = useRouter();
   const user = useAuthStore((state) => state.user);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     const confirm = window.confirm("Apakah anda yakin ingin keluar?");
+    await http.post("/logout");
+    localStorage.removeItem("token");
+    localStorage.removeItem("auth-store");
+    localStorage.removeItem("cart-store");
+    localStorage.removeItem("map-store");
     if (confirm) {
+      router.reload();
+      router.replace("/");
     }
   };
 
