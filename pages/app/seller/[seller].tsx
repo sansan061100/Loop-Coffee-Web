@@ -11,7 +11,6 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { Fragment, ReactElement } from "react";
 import { useQuery } from "react-query";
-import toast from "react-simple-toasts";
 import { shallow } from "zustand/shallow";
 
 interface Category {
@@ -34,14 +33,13 @@ const Seller = () => {
   );
 
   const handleAddCart = (val: ProductProps) => {
+    setCart({ ...val, qty: 1, outlet_id: data?.outlet.id });
     // check if store already set
     setStore({
       id: data?.outlet.id,
       name: data?.outlet.name,
       address: data?.outlet.address,
     });
-
-    setCart({ ...val, qty: 1 });
   };
 
   return (

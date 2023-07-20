@@ -5,6 +5,7 @@ import { persist } from "zustand/middleware";
 
 export interface Cart extends ProductProps {
   qty?: number;
+  outlet_id: number;
 }
 
 interface Store {
@@ -33,12 +34,13 @@ const cartStore = persist<CartStore>(
     },
     setCart: (val, disableToast) => {
       // check if product already in cart
-      const isExist = get().data.find((item) => item.id === val.id);
-      if (isExist) {
+      const isProductExist = get().data.find((item) => item.id === val.id);
+      const isStoreExist = get().store.id === val.outlet_id;
+      if (isProductExist && isStoreExist) {
         // if exist, update qty
         const newData = get().data.map((item) => {
           const qty = item.qty ? item.qty + 1 : 2;
-          // check qty with stock
+
           if (qty > item.stock) {
             toast("Stok tidak mencukupi");
             return item;
@@ -57,7 +59,13 @@ const cartStore = persist<CartStore>(
       }
       // if not exist, add new product
       else {
-        set({ data: [...get().data, val] });
+        // @ts-ignore
+        if (parseInt(val.stock) === 0) {
+          toast("Stok tidak mencukupi");
+          return;
+        } else {
+          set({ data: [val] });
+        }
       }
       if (!disableToast) {
         toast("Berhasil menambahkan ke keranjang");

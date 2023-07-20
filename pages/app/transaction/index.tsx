@@ -71,6 +71,11 @@ const Transaction = () => {
           </Link>
         ))
       )}
+      {data?.length === 0 && (
+        <div className="flex py-32 justify-center items-center">
+          <p>Tidak ada data</p>
+        </div>
+      )}
       <div className="h-48 w-full" />
     </div>
   );
