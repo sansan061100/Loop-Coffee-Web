@@ -36,29 +36,32 @@ const cartStore = persist<CartStore>(
       // check if product already in cart
       const isProductExist = get().data.find((item) => item.id === val.id);
       const isStoreExist = get().store.id === val.outlet_id;
-      if (isProductExist && isStoreExist) {
-        // if exist, update qty
-        const newData = get().data.map((item) => {
-          const qty = item.qty ? item.qty + 1 : 2;
 
-          if (qty > item.stock) {
-            toast("Stok tidak mencukupi");
+      if (isStoreExist) {
+        if (isProductExist) {
+          // if exist, update qty
+          const newData = get().data.map((item) => {
+            const qty = item.qty ? item.qty + 1 : 2;
+
+            if (qty > item.stock) {
+              toast("Stok tidak mencukupi");
+              return item;
+            }
+
+            if (item.id === val.id) {
+              return {
+                ...item,
+                qty: qty,
+              };
+            }
+
             return item;
-          }
-
-          if (item.id === val.id) {
-            return {
-              ...item,
-              qty: qty,
-            };
-          }
-
-          return item;
-        });
-        set({ data: newData });
-      }
-      // if not exist, add new product
-      else {
+          });
+          set({ data: newData });
+        } else {
+          set({ data: [...get().data, val] });
+        }
+      } else {
         // @ts-ignore
         if (parseInt(val.stock) === 0) {
           toast("Stok tidak mencukupi");
@@ -67,6 +70,7 @@ const cartStore = persist<CartStore>(
           set({ data: [val] });
         }
       }
+
       if (!disableToast) {
         toast("Berhasil menambahkan ke keranjang");
       }
