@@ -13,6 +13,7 @@ import { RADIUS } from "@/utils/constant";
 import { useShippingStore } from "@/store/shipping-store";
 import toast from "react-simple-toasts";
 import { shallow } from "zustand/shallow";
+import helper from "@/utils/helper";
 
 const Checkout = () => {
   const store = useCartStore((state) => state.store);
@@ -86,6 +87,16 @@ const Checkout = () => {
     }
   );
 
+  const getTotalPrice = () => {
+    let total = 0;
+    cart.forEach((item) => {
+      if (item.qty) {
+        total += item.qty * item.sell_price;
+      }
+    });
+    return total;
+  };
+
   return (
     <NoSSR>
       <div className="w-full">
@@ -111,6 +122,12 @@ const Checkout = () => {
           </div>
         </div>
         <div className="footer-container">
+          <div className="flex justify-between items-center py-5">
+            <h4 className="text-lg font-semibold">Total Harga</h4>
+            <h4 className="text-lg font-semibold">
+              {helper.number(getTotalPrice(), "Rp")}
+            </h4>
+          </div>
           <button
             className={`btn btn-primary w-full ${
               isLoading || mutation.isLoading ? "loading" : ""
