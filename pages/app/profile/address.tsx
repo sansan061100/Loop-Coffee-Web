@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { ReactElement, useLayoutEffect } from "react";
+import toast from "react-simple-toasts";
 const MapPicker = dynamic(() => import("@/components/Address/MapPicker"), {
   ssr: false,
 });
@@ -15,13 +16,11 @@ const Address = () => {
     navigator.permissions
       .query({ name: "geolocation" })
       .catch(() => {
-        alert("Please allow location access to use this feature.");
-        router.back();
+        toast("Please allow location access to use this feature.");
       })
       .then((res: any) => {
         if (res.state === "denied") {
-          alert("Permission to access location was denied");
-          router.back();
+          toast("Please allow location access to use this feature.");
         }
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
