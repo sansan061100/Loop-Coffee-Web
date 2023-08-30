@@ -5,12 +5,19 @@ import Loading from "@/components/Seller/Loading";
 import { useMapStore } from "@/store/map-store";
 import { RADIUS } from "@/utils/constant";
 import http from "@/utils/http";
+import { useRouter } from "next/router";
 import React, { ReactElement, useEffect } from "react";
 import { useQuery } from "react-query";
-import toast from "react-simple-toasts";
 
 const Home = () => {
   const location = useMapStore((state) => state.location);
+
+  const router = useRouter();
+  useEffect(() => {
+    if (location.lat !== 0 && location.long !== 0) return;
+    router.push("/app/profile/address");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.lat, location.long]);
 
   const { data, isLoading } = useQuery(
     ["sellers", location.lat, location.long],
