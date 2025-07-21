@@ -17,19 +17,31 @@ const useMap = () => {
     return new Promise(async (resolve, reject) => {
       try {
         const URL = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${MAP_KEY}`;
-        await axios.get(URL).then((res) => {
-          return resolve({
-            lat,
-            long,
-            address: res.data.results[0].formatted_address,
-            shortAddress: res.data.results[0].address_components[1].short_name,
-          });
+        const res = await axios.get(URL);
+
+        const results = res.data.results;
+
+        if (!results || results.length === 0) {
+          toast("Oops, something went wrong.");
+        }
+
+        const address = results[0]?.formatted_address;
+        const shortAddress =
+          results[0]?.address_components?.[1]?.short_name || address;
+
+        resolve({
+          lat,
+          long,
+          address,
+          shortAddress,
         });
       } catch (error) {
-        toast("Oops something went wrong.");
-        return reject(error);
+        console.error(error);
+        toast("Oops, something went wrong.");
+        reject(error);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     });
   };
 
