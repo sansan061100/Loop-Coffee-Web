@@ -22,7 +22,7 @@ const Tracking = () => {
     async () => {
       const req = await http.get(`/order/${query.code}`);
       const result = req.data.result;
-      const location = result.outlet.location_outlet;
+      const location = result?.outlet?.location_outlet;
 
       let address = "Tidak ada alamat";
 
