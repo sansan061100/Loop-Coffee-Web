@@ -21,20 +21,35 @@ const Tracking = () => {
     ["detail-order", query.code],
     async () => {
       const req = await http.get(`/order/${query.code}`);
-      const address = await axios.get(
-        "https://nominatim.openstreetmap.org/reverse?format=json&lat=" +
-          req.data.result.outlet.location_outlet.lat +
-          "&lon=" +
-          req.data.result.outlet.location_outlet.lng +
-          "&zoom=18&addressdetails=1"
-      );
+      const result = req.data.result;
+      const location = result.outlet.location_outlet;
+
+      let address = "Tidak ada alamat";
+      if (location?.lat != null && location?.lng != null) {
+        try {
+          const response = await axios.get(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${location.lat}&lon=${location.lng}&zoom=18&addressdetails=1`
+          );
+          if (response.status === 200) {
+            address = response.data.display_name;
+          }
+        } catch (error) {
+          console.error("Failed to fetch address", error);
+        }
+      }
+
       return {
-        ...req.data.result,
-        // address: address.data.display_name,
-        address: address.status == 200 ? address.data.display_name : "Tidak ada alamat",
+        ...result,
+        address,
       };
+    },
+    {
+      enabled: !!query.code, // pastikan query.code sudah tersedia
     }
   );
+
+
+
 
   const callWa = () => {
     window.open(
