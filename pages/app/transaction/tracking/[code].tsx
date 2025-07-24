@@ -25,6 +25,7 @@ const Tracking = () => {
       const location = result.outlet.location_outlet;
 
       let address = "Tidak ada alamat";
+
       if (location?.lat != null && location?.lng != null) {
         try {
           const response = await axios.get(
@@ -34,7 +35,8 @@ const Tracking = () => {
             address = response.data.display_name;
           }
         } catch (error) {
-          console.error("Failed to fetch address", error);
+          console.error("Gagal fetch alamat dari Nominatim:", error);
+          // address tetap "Tidak ada alamat"
         }
       }
 
@@ -44,12 +46,9 @@ const Tracking = () => {
       };
     },
     {
-      enabled: !!query.code, // pastikan query.code sudah tersedia
+      enabled: !!query.code,
     }
   );
-
-
-
 
   const callWa = () => {
     window.open(
