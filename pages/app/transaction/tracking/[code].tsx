@@ -30,7 +30,8 @@ const Tracking = () => {
       );
       return {
         ...req.data.result,
-        address: address.data.display_name,
+        // address: address.data.display_name,
+        address: address.status == 200 ? address.data.display_name : "Tidak ada alamat",
       };
     }
   );
@@ -64,55 +65,55 @@ const Tracking = () => {
       ) : (
         <>
           {data.status == TRANSACTION.WAITING && (
-            <div className="alert rounded-none flex justify-center">
+            <div className="flex justify-center rounded-none alert">
               {data.shipping_type == SHIPPING.SEND ? (
-                <p className="text-sm text-gray-500">
+                <p className="text-gray-500 text-sm">
                   Pesanan akan diantar oleh penjual
                 </p>
               ) : (
-                <p className="text-sm text-gray-500">
+                <p className="text-gray-500 text-sm">
                   Segera ambil pesananmu di outlet
                 </p>
               )}
             </div>
           )}
-          <div className="p-5 space-y-4 border-b">
-            <div className="flex space-x-5 items-center">
-              <BuildingStorefrontIcon className="h-6 w-6 text-primary-500" />
+          <div className="space-y-4 p-5 border-b">
+            <div className="flex items-center space-x-5">
+              <BuildingStorefrontIcon className="w-6 h-6 text-primary-500" />
               <p className="font-medium">{data.outlet?.name}</p>
             </div>
             <div
-              className="flex space-x-5 items-center justify-between"
+              className="flex justify-between items-center space-x-5"
               onClick={callWa}
             >
-              <div className="flex space-x-5 items-center">
-                <PhoneIcon className="h-6 w-6 text-primary-500" />
-                <p className="font-medium border-b border-dashed ">
+              <div className="flex items-center space-x-5">
+                <PhoneIcon className="w-6 h-6 text-primary-500" />
+                <p className="border-b border-dashed font-medium">
                   {data?.outlet.phone_number}
                 </p>
               </div>
-              <ChevronRightIcon className="h-5 w-5" />
+              <ChevronRightIcon className="w-5 h-5" />
             </div>
             <div
-              className="flex space-x-5 items-center justify-between cursor-pointer"
+              className="flex justify-between items-center space-x-5 cursor-pointer"
               onClick={openMap}
             >
-              <div className="flex space-x-5 items-center">
+              <div className="flex items-center space-x-5">
                 <div className="flex-1">
-                  <MapPinIcon className="h-6 w-6 text-primary-500" />
+                  <MapPinIcon className="w-6 h-6 text-primary-500" />
                 </div>
-                <p className="font-medium line-clamp-1 border-b border-dashed ">
+                <p className="border-b border-dashed font-medium line-clamp-1">
                   {data?.address}
                 </p>
               </div>
-              <ChevronRightIcon className="h-5 w-5" />
+              <ChevronRightIcon className="w-5 h-5" />
             </div>
           </div>
           <div className="p-5">
-            <h4 className="text-lg font-semibold">Order Detail</h4>
-            <ul className="mt-5 space-y-5 pb-5 border-b">
+            <h4 className="font-semibold text-lg">Order Detail</h4>
+            <ul className="space-y-5 mt-5 pb-5 border-b">
               {data.detail_order.map((item: any) => (
-                <li key={item.id} className="flex items-center justify-between">
+                <li key={item.id} className="flex justify-between items-center">
                   <p>
                     {item.product.name} x {item.qty}
                   </p>
@@ -125,8 +126,8 @@ const Tracking = () => {
                 </li>
               ))}
             </ul>
-            <ul className="mt-5 space-y-5">
-              <li className="flex items-center justify-between">
+            <ul className="space-y-5 mt-5">
+              <li className="flex justify-between items-center">
                 <p>Total Yang Dibayar</p>
                 <p className="text-gray-500">
                   {helper.number(data.amount, "Rp")}
@@ -136,7 +137,7 @@ const Tracking = () => {
           </div>
           {data.status == TRANSACTION.WAITING && (
             <div className="footer-container">
-              <button className="btn btn-primary w-full" onClick={callWa}>
+              <button className="w-full btn btn-primary" onClick={callWa}>
                 Hubungi Penjual
               </button>
             </div>
